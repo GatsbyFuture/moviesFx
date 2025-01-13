@@ -1,24 +1,26 @@
-import {Component, Fragment} from 'react';
+import {Fragment, useState} from 'react';
 import './search-panel.css'
 
-class SearchPanel extends Component {
+const SearchPanel = ({onSearch}) => {
+    const [term, setTerm] = useState('');
 
-    changeHandlerInput = (e) => {
-        this.props.onSearch(e.target.value);
+    const changeHandlerInput = e => {
+        const term = e.target.value;
+        setTerm(term);
+        onSearch(term);
     }
 
-    render() {
-        return (
-            <Fragment>
-                <input
-                    type='text'
-                    className='form-control search-input'
-                    placeholder='Kinolarni qidirish...'
-                    onChange={e => this.changeHandlerInput(e)}
-                />
-            </Fragment>
-        )
-    }
-}
+    return (
+        <Fragment>
+            <input
+                type='text'
+                className='form-control search-input'
+                placeholder='Kinolarni qidirish...'
+                onChange={e => changeHandlerInput(e)}
+                value={term}
+            />
+        </Fragment>
+    );
+};
 
 export default SearchPanel;

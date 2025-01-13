@@ -16,6 +16,7 @@ const MoviesAddForm = ({onAdd}) => {
 
     const addFormHandler = e => {
         e.preventDefault();
+        if (movie.name === '' || movie.viewers === '') return;
         onAdd(movie);
         setMovie({
             name: '',
