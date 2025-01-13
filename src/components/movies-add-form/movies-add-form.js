@@ -1,38 +1,28 @@
-import {Component} from 'react';
+import {useState} from 'react';
 import './movies-add-form.css';
 
-class MoviesAddForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
-            viewers: '',
-        };
-    }
+const MoviesAddForm = ({onAdd}) => {
+    const [movie, setMovie] = useState({
+        name: '',
+        viewers: '',
+    });
 
-    changeHandlerInput = e => {
-        this.setState({
-            [e.target.name]: e.target.value
+    const changeHandlerInput = e => {
+        setMovie({
+            ...movie,
+            [e.target.name]: e.target.value,
         })
     }
 
-    addFormHandler = e => {
+    const addFormHandler = e => {
         e.preventDefault();
-        this.props.onAdd(this.state);
-        this.setState({
+        onAdd(movie);
+        setMovie({
             name: '',
             viewers: '',
         })
     }
 
-    render() {
-        const {name, viewers} = this.state;
-
-
-    }
-}
-
-const MoviesAddForm = () => {
     return (
         <div className='movies-add-form'>
             <h3>Yangi kino qo'shish</h3>
@@ -41,22 +31,22 @@ const MoviesAddForm = () => {
                     type='text'
                     className='form-control new-post-label'
                     placeholder='Qanday kino?'
-                    onChange={this.changeHandlerInput}
+                    onChange={changeHandlerInput}
                     name='name'
-                    value={name}
+                    value={movie.name}
                 />
                 <input
                     type='number'
                     className='form-control new-post-label'
                     placeholder="Nechi marta ko'rilgan?"
-                    onChange={this.changeHandlerInput}
+                    onChange={changeHandlerInput}
                     name='viewers'
-                    value={viewers}
+                    value={movie.viewers}
                 />
                 <button
                     type='button'
                     className='btn btn-outline-dark'
-                    onClick={this.addFormHandler}>
+                    onClick={addFormHandler}>
                     Qo'shish
                 </button>
             </div>
