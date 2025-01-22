@@ -1,7 +1,11 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import './movies-add-form.css';
+import {Context} from "../../context";
+import {v4 as uuid} from "uuid";
 
-const MoviesAddForm = ({onAdd}) => {
+const MoviesAddForm = () => {
+    const {state, dispatch} = useContext(Context);
+
     const [movie, setMovie] = useState({
         name: '',
         viewers: '',
@@ -17,7 +21,15 @@ const MoviesAddForm = ({onAdd}) => {
     const addFormHandler = e => {
         e.preventDefault();
         if (movie.name === '' || movie.viewers === '') return;
-        onAdd(movie);
+        dispatch({
+            type: 'ADD_MOVIE',
+            payload: {
+                ...movie,
+                favourite: false,
+                like: false,
+                id: uuid()
+            },
+        })
         setMovie({
             name: '',
             viewers: '',

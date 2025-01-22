@@ -1,13 +1,13 @@
-import {Fragment, useState} from 'react';
+import {Fragment, useContext} from 'react';
 import './search-panel.css'
+import {Context} from "../../context";
 
-const SearchPanel = ({onSearch}) => {
-    const [term, setTerm] = useState('');
+const SearchPanel = () => {
+    const {state, dispatch} = useContext(Context);
 
     const changeHandlerInput = e => {
         const term = e.target.value;
-        setTerm(term);
-        onSearch(term);
+        dispatch({type: 'SEARCH', payload: term});
     }
 
     return (
@@ -16,8 +16,8 @@ const SearchPanel = ({onSearch}) => {
                 type='text'
                 className='form-control search-input'
                 placeholder='Kinolarni qidirish...'
-                onChange={e => changeHandlerInput(e)}
-                value={term}
+                onChange={changeHandlerInput}
+                value={state.term}
             />
         </Fragment>
     );
